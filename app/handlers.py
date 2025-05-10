@@ -37,3 +37,19 @@ async def set_url(message: Message, state: FSMContext):
     data = await state.get_data()
     await message.answer(f'Вот твой url: {data['url']}')
     await state.clear()
+
+
+@router.message(Command('get_art'))
+async def get_url(message: Message, state: FSMContext):
+    await state.set_state(Form.url)
+    await message.answer('Введи артикул товара'
+                         '\nИ бот выдаст отзыв о товаре.')
+
+
+@router.message(Form.art)
+async def set_url(message: Message, state: FSMContext):
+    await state.update_data(art=message.text)
+    data = await state.get_data()
+    await message.answer(f'Вот твой артикул: {data['art']}')
+    await state.clear()
+
